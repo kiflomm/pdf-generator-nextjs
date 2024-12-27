@@ -1,5 +1,4 @@
-import { Document, Page, Text, View, Image, StyleSheet, } from '@react-pdf/renderer'
-import { QRCodeSVG } from 'qrcode.react'
+import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({
   page: {
@@ -12,22 +11,28 @@ const styles = StyleSheet.create({
     padding: 10,
     flexGrow: 1,
   },
-  image: {
+  qrCode: {
     width: 200,
     height: 200,
   },
 })
 
-export function PDFDocument({ imageUrl }: Readonly<{ imageUrl: string }>) {
+interface PDFDocumentProps {
+  qrCodeDataUrl: string       // This will be a data URL of the QR code image 
+  imageUrl: string
+}
+
+export function PDFDocument({ qrCodeDataUrl, imageUrl }: Readonly<PDFDocumentProps>) {
+  
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text>Generated PDF</Text>
+          <Image src={imageUrl} style={{ width: '100%', height: '100%' }} />
         </View>
         <View style={styles.section}>
-          <Image src={imageUrl} style={styles.image} />
+          <Image src={qrCodeDataUrl} style={styles.qrCode} />
         </View>
       </Page>
     </Document>
